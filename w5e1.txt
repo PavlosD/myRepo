@@ -1,0 +1,46 @@
+from pyspark import SparkContext, SparkConf
+import os
+import sys
+import numpy as np
+
+#datasets path on shared group directory on Ukko2. Uncomment the one which you would like to work on.
+dataset = "/wrk/group/ids2019/dataset/data-1-sample.txt"
+#dataset = "/wrk/group/ids2019/dataset/data-1.txt"
+
+conf = (SparkConf()
+        .setAppName("desopoul")           ##change app name to your username
+        .setMaster("spark://128.214.48.200:7077")
+        .set("spark.cores.max", "10")  ##dont be too greedy ;)
+        .set("spark.rdd.compress", "true")
+        .set("spark.broadcast.compress", "true"))
+sc = SparkContext(conf=conf)
+
+data = sc.textFile(dataset)
+data = data.map(lambda s: float(s))
+
+
+count = data.count()
+sum = data.sum()
+min = data.min()
+max = data.max()
+avg = data.mean()
+
+print "Count = %.8f" % count
+print "Sum = %.8f" % sum
+sc = SparkContext(conf=conf)
+
+data = sc.textFile(dataset)
+data = data.map(lambda s: float(s))
+
+
+count = data.count()
+sum = data.sum()
+min = data.min()
+max = data.max()
+avg = data.mean()
+
+print "Count = %.8f" % count
+print "Sum = %.8f" % sum
+print "Min = %.8f" % min
+print "Max = %.8f" % max
+print "Average = %.8f" % avg
